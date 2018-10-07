@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="buttonDBLabel">Insert Data</string>
+    <string name="buttonReadDBLabel">Recent Insert</string>
+</resources>
