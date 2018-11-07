@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/NameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/nameHintLabel" />
+
+    <EditText
+        android:id="@+id/PriceEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="81dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/PriceHintLabel" />
+
+    <EditText
+        android:id="@+id/QuantityEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="149dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="@string/QuantityHintLabel" />
+
+    <EditText
+        android:id="@+id/SupplierNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ems="10"
+        android:hint="@string/Supplier_Name_Hint_Label" />
+
+    <EditText
+        android:id="@+id/SupplierNumberEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="148dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="@string/Supplier_PhoneNumber_Hint_Label" />
+</RelativeLayout>

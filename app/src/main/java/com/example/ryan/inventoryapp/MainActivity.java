@@ -1,17 +1,15 @@
 package com.example.ryan.inventoryapp;
 
-import android.content.ContentValues;
+import android.app.DialogFragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity implements AddDialogBox.AddDialogListener {
     BookInfoDbHelper mDbHelper = new BookInfoDbHelper(this);
 
 
@@ -20,10 +18,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        displayDatabaseInfo();
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               showAddDialog();
+            }
+        });
+
     }
 
-    // Cursor reading the most recent data inserted
+
+
+    public void showAddDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new AddDialogBox();
+        dialog.show(getFragmentManager(), "AddDialogFragment");
+    }
+
+    /*// Cursor reading the most recent data inserted
     public void readRecentDataDB(View view) {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -63,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,lastItem + " is the last inserted book.",Toast.LENGTH_SHORT).show();
 
         }
-    }
+    }*/
 
 
-
+/*
     //Method call when the button is hit. We are going to insert data into the. From the offical Android documentation website
     public void InsertingData(View view){
         // Gets the data repository in write mode
@@ -80,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
         values.put(BookInfoContract.BookEntry.SUPPLIER_NAME, "We Got The Books");
         values.put(BookInfoContract.BookEntry.SUPPLIER_PHONE_NUMBER_COLUMN,"662-313-4923");
         db.insert(BookInfoContract.BookEntry.TABLE_NAME, null, values);
-
+*//**//*
 
       // Update the the display
         displayDatabaseInfo();
-    }
+    }*/
     /**
      * Temporary helper method to display information in the onscreen TextView about the state of
      * the pets database. Got this method from the https://github.com/udacity/ud845-Pets/blob/a53dd16846606a7980c8569fc23205e35fa85ea2/app/src/main/java/com/example/android/pets/CatalogActivity.java
@@ -103,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.testingDatabaseString);
-            displayView.setText("Number of rows in my database table: " + cursor.getCount());
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
@@ -113,4 +124,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onDialogDoneClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
 }

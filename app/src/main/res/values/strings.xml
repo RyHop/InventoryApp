@@ -2,4 +2,24 @@
     <string name="app_name">InventoryApp</string>
     <string name="buttonDBLabel">Insert Data</string>
     <string name="buttonReadDBLabel">Recent Insert</string>
+    <string name="EmptyListViewLabel">No data to display. Please hit the floating button near the bottom to add items.</string>
+    <string name="SaleButtonLabel">Sale</string>
+    <string name="EditButtonLabel">Edit</string>
+    <string name="PriceLabel">Price: </string>
+    <string name="QuantityLabel">Quantity: </string>
+    <string name="NameLabel">Name: </string>
+    <string name="SupplierNameLabel">Supplier\'s Name: </string>
+    <string name="SupplierPhoneNumberLabel">Supplier\'s Phone Number: </string>
+    <string name="DeleteButtonLabel">Delete</string>
+    <string name="PlusButtonLabel">+</string>
+    <string name="MinusButtonLabel">-</string>
+    <string name="OrderButtonLabel">Order</string>
+    <string name="nameHintLabel">Name</string>
+    <string name="PriceHintLabel">Price of One Item</string>
+    <string name="QuantityHintLabel">Quantity</string>
+    <string name="Supplier_Name_Hint_Label">Supplier\'s Name</string>
+    <string name="Supplier_PhoneNumber_Hint_Label">Supplier\'s Phone Number</string>
+    <string name="DoneButtonLabel">Done</string>
+    <string name="CancelButtonLabel">Cancel</string>
+    <string name="SaveButtonLabel">Save</string>
 </resources>
