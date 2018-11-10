@@ -4,30 +4,30 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.ryan.inventoryapp.BookInfoContract.BookEntry;
+import com.example.ryan.inventoryapp.InventoryContract.InventoryEntry;
 
 
-public class BookInfoDbHelper extends SQLiteOpenHelper {
+public class InventoryDBHelper extends SQLiteOpenHelper {
     //Create Database command for CREATE
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + BookEntry.TABLE_NAME + "(" +
-                    BookEntry._ID + " INTEGER PRIMARY KEY, " +
-                    BookEntry.NAME_COLUMN + " TEXT, " +
-                    BookEntry.PRICE_COLUMN + " INTEGER, " +
-                    BookEntry.QUANTITY_COLUMN + " INTEGER, " +
-                    BookEntry.SUPPLIER_NAME + " TEXT, " +
-                    BookEntry.SUPPLIER_PHONE_NUMBER_COLUMN + " TEXT);";
+            "CREATE TABLE " + InventoryEntry.TABLE_NAME + "(" +
+                    InventoryEntry._ID + " INTEGER PRIMARY KEY, " +
+                    InventoryEntry.NAME_COLUMN + " TEXT, " +
+                    InventoryEntry.PRICE_COLUMN + " TEXT, " +
+                    InventoryEntry.QUANTITY_COLUMN + " INTEGER, " +
+                    InventoryEntry.SUPPLIER_NAME + " TEXT, " +
+                    InventoryEntry.SUPPLIER_PHONE_NUMBER_COLUMN + " TEXT);";
 
 
         private static final String SQL_DELETE_ENTRIES =
-                "DROP TABLE IF EXISTS " + BookEntry.TABLE_NAME;
+                "DROP TABLE IF EXISTS " + InventoryEntry.TABLE_NAME;
 
 
         // If you change the database schema, you must increment the database version.
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "BookInfo.db";
 
-        public BookInfoDbHelper(Context context) {
+    public InventoryDBHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 

@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="81dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:hint="@string/PriceHintLabel" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="149dp"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:hint="@string/QuantityHintLabel" />
 
     <EditText

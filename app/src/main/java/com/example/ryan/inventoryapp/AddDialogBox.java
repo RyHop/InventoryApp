@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 // All info is from the official Android Dialog box tutorial.
 
@@ -15,7 +18,7 @@ public class AddDialogBox extends DialogFragment {
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface AddDialogListener {
-        public void onDialogDoneClick(DialogFragment dialog);
+        public void onDialogDoneClick(DialogFragment dialog, String nameString, String priceString, int quantityInt, String supplierNameString, String supplierNumberString);
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -46,13 +49,58 @@ public class AddDialogBox extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.add_inventor_item_dialog_box_layout, null))
+
+        //Got solution or how to grab view texts from this website: https://stackoverflow.com/questions/31153018/get-edittext-value-from-alertdialog-builder
+        View mView = inflater.inflate(R.layout.add_inventor_item_dialog_box_layout, null);
+        final EditText name = (EditText) mView.findViewById(R.id.NameEditText);
+        final EditText price = (EditText) mView.findViewById(R.id.PriceEditText);
+        final EditText quantity = (EditText) mView.findViewById(R.id.QuantityEditText);
+        final EditText supplierName = (EditText) mView.findViewById(R.id.SupplierNameEditText);
+        final EditText supplierNumber = (EditText) mView.findViewById(R.id.SupplierNumberEditText);
+
+        builder.setView(mView)
+
                 // Add action buttons
                 .setPositiveButton(R.string.DoneButtonLabel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-                        mListener.onDialogDoneClick(AddDialogBox.this);
+
+                        // check to see if data is null
+
+                        String nameString = name.getText().toString();
+                        String priceString = price.getText().toString();
+                        String quantityString = quantity.getText().toString();
+                        String supplierNameString = supplierName.getText().toString();
+                        String supplierNumberString = supplierNumber.getText().toString();
+
+                        // Price should be an float..a decimal or float
+                        // Quantity should be an integer, a positive integer
+
+                        double priceDouble = Double.valueOf(priceString);
+                        int quantityInt = Integer.valueOf(quantityString);
+
+                        if (nameString != null && priceString != null && quantityString != null && supplierNameString != null && supplierNumberString != null) {
+
+
+                            // Check to see if quantity and price is above or equal zero
+                            if (quantityInt > 0 && priceDouble >= 0) {
+                                mListener.onDialogDoneClick(AddDialogBox.this, nameString, priceString, quantityInt, supplierNameString, supplierNumberString);
+
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.positiveMatters, Toast.LENGTH_SHORT).show();
+
+                            }
+                            // Add items if all values are not null
+
+
+                        } else {
+
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.showNullValuesText, Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+
                     }
                 })
                 .setNegativeButton(R.string.CancelButtonLabel, new DialogInterface.OnClickListener() {
