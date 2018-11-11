@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,25 @@ public class MainActivity extends FragmentActivity implements AddDialogBox.AddDi
 
 
         getLoaderManager().initLoader(itemLoader, null, this);
+
+        //Creates a listoner if clicked
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Open up product page and send the uri
+                Intent intent = new Intent(MainActivity.this, DetailedPage.class);
+
+                Uri uri = Uri.withAppendedPath(InventoryContract.InventoryEntry.CONTENT_URI, String.valueOf(id));
+
+                intent.putExtra("theUri", uri);
+
+                startActivity(intent);
+
+
+            }
+        });
     }
 
 

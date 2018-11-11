@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,60 +11,61 @@
      -->
     <TextView
         android:id="@+id/nameTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/NameLabel"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/NameLabel" />
 
     <TextView
-        android:layout_alignTop="@id/nameTextView"
         android:id="@+id/nameTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/nameTextView"
-        android:layout_toEndOf="@id/nameTextView"
-        android:layout_marginLeft="45dp"
+        android:layout_alignTop="@id/nameTextView"
         android:layout_marginStart="45dp"
-        tools:text="HHELSJKEFL:KF"/>
+        android:layout_marginLeft="45dp"
+        android:layout_toEndOf="@id/nameTextView"
+        android:layout_toRightOf="@id/nameTextView"
+        tools:text="HHELSJKEFL:KF" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_toEndOf="@id/nameTextBox"
         android:layout_toRightOf="@+id/nameTextBox"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:text="@string/DeleteButtonLabel"/>
+        android:text="@string/DeleteButtonLabel" />
 
     <!--
      Price Section
      -->
 
     <TextView
-        android:layout_marginTop="15dp"
         android:id="@+id/priceTextView"
-        android:layout_below="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/PriceLabel"/>
+        android:layout_below="@+id/nameTextView"
+        android:layout_marginTop="15dp"
+        android:text="@string/PriceLabel" />
+
     <TextView
         android:id="@+id/priceTextBox"
-        android:layout_marginStart="45dp"
-        android:layout_marginLeft="45dp"
-        android:layout_alignLeft="@id/priceTextView"
-        android:layout_toRightOf="@id/priceTextView"
-        android:layout_toEndOf="@+id/priceTextView"
-        android:layout_alignTop="@id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="2903"/>
+        android:layout_alignLeft="@id/priceTextView"
+        android:layout_alignTop="@id/priceTextView"
+        android:layout_marginStart="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_toEndOf="@+id/priceTextView"
+        android:layout_toRightOf="@id/priceTextView"
+        tools:text="2903" />
 
     <!--
      The Quantity section with an increase and decrease button
@@ -74,86 +74,90 @@
         android:id="@+id/QuantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/QuantityLabel"
+        android:layout_below="@id/priceTextView"
         android:layout_marginTop="15dp"
-        android:layout_below="@id/priceTextView"/>
+        android:text="@string/QuantityLabel" />
+
     <TextView
         android:id="@+id/QuantityTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/QuantityTextView"
-        android:layout_toEndOf="@id/QuantityTextView"
         android:layout_alignTop="@+id/QuantityTextView"
-        android:layout_marginLeft="35dp"
         android:layout_marginStart="35dp"
-        tools:text="HHELLLO"/>
+        android:layout_marginLeft="35dp"
+        android:layout_toEndOf="@id/QuantityTextView"
+        android:layout_toRightOf="@id/QuantityTextView"
+        tools:text="HHELLLO" />
 
     <Button
-        android:layout_toRightOf="@id/QuantityTextBox"
-        android:layout_toEndOf="@id/QuantityTextBox"
         android:id="@+id/increaseQuantityButton"
-        android:layout_marginRight="15dp"
-        android:layout_alignTop="@+id/QuantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/PlusButtonLabel"/>
+        android:layout_alignTop="@+id/QuantityTextView"
+        android:layout_marginRight="15dp"
+        android:layout_toEndOf="@id/QuantityTextBox"
+        android:layout_toRightOf="@id/QuantityTextBox"
+        android:text="@string/PlusButtonLabel" />
+
     <Button
         android:id="@+id/decreaseQuantityButton"
-        android:layout_toRightOf="@id/increaseQuantityButton"
-        android:layout_toEndOf="@id/increaseQuantityButton"
-        android:layout_alignTop="@+id/QuantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/MinusButtonLabel"/>
+        android:layout_alignTop="@+id/QuantityTextView"
+        android:layout_toEndOf="@id/increaseQuantityButton"
+        android:layout_toRightOf="@id/increaseQuantityButton"
+        android:text="@string/MinusButtonLabel" />
 
     <!--
      Supplier's Name
      -->
 
     <TextView
-        android:layout_below="@id/increaseQuantityButton"
-        android:layout_marginTop="15dp"
         android:id="@+id/supplierNameTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/SupplierNameLabel"/>
+        android:layout_below="@id/increaseQuantityButton"
+        android:layout_marginTop="15dp"
+        android:text="@string/SupplierNameLabel" />
+
     <TextView
-        android:layout_toRightOf="@+id/supplierNameTextview"
-        android:layout_toEndOf="@+id/supplierNameTextview"
         android:id="@+id/supplierNameTextBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/supplierNameTextview"
         android:layout_marginStart="45dp"
         android:layout_marginLeft="45dp"
-        android:layout_alignTop="@id/supplierNameTextview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_toEndOf="@+id/supplierNameTextview"
+        android:layout_toRightOf="@+id/supplierNameTextview" />
 
     <!--
     Supplier Phone Number with the order button to send it to a contact app
      -->
     <TextView
         android:id="@+id/supplierNumberTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/supplierNameTextview"
         android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/SupplierPhoneNumberLabel"/>
+        android:text="@string/SupplierPhoneNumberLabel" />
+
     <TextView
         android:id="@+id/supplierNumberTextBox"
-        android:layout_marginLeft="75dp"
-        android:layout_marginStart="75dp"
-        android:layout_alignTop="@id/supplierNumberTextview"
-        android:layout_toRightOf="@id/supplierNumberTextview"
-        android:layout_toEndOf="@+id/supplierNameTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="HELLLO"/>
+        android:layout_alignTop="@id/supplierNumberTextview"
+        android:layout_marginStart="75dp"
+        android:layout_marginLeft="75dp"
+        android:layout_toEndOf="@+id/supplierNameTextview"
+        android:layout_toRightOf="@id/supplierNumberTextview"
+        tools:text="HELLLO" />
 
     <Button
         android:id="@+id/orderButton"
-        android:layout_margin="25dp"
-        android:layout_below="@id/supplierNumberTextview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/OrderButtonLabel"/>
+        android:layout_below="@id/supplierNumberTextview"
+        android:layout_margin="25dp"
+        android:text="@string/OrderButtonLabel" />
 
 </RelativeLayout>
