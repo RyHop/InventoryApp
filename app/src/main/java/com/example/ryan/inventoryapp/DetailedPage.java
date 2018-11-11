@@ -88,7 +88,7 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
             quantityTextBox.setText(String.valueOf(quantity));
             supplierNameTextBox.setText(supplierName);
             supplierNumberTextBox.setText(supplierNumber);
-
+//oops
 
         } else {
 
