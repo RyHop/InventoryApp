@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity implements AddDialogBox.AddDialogListener, LoaderManager.LoaderCallbacks<Cursor> {
+    private final String LogTag = MainActivity.class.getSimpleName();
 
     private final static int itemLoader = 0;
     InventoryCursorAdapter myAdapter;
@@ -38,25 +39,13 @@ public class MainActivity extends FragmentActivity implements AddDialogBox.AddDi
 
 
         myAdapter = new InventoryCursorAdapter(this, null);
-        lvItems.setAdapter(myAdapter);
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddDialog();
-            }
-        });
-
-
-        getLoaderManager().initLoader(itemLoader, null, this);
 
         //Creates a listoner if clicked
 
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(MainActivity.this, "WE HERE", Toast.LENGTH_SHORT).show();
                 // Open up product page and send the uri
                 Intent intent = new Intent(MainActivity.this, DetailedPage.class);
 
@@ -69,8 +58,23 @@ public class MainActivity extends FragmentActivity implements AddDialogBox.AddDi
 
             }
         });
-    }
 
+        lvItems.setAdapter(myAdapter);
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddDialog();
+            }
+        });
+
+
+
+        getLoaderManager().initLoader(itemLoader, null, this);
+
+
+    }
 
 
     public void showAddDialog() {
