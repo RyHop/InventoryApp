@@ -74,7 +74,6 @@ public class InventoryProvider extends ContentProvider {
                 // Create and/or open a database to read from it
                 cursor = db.query(InventoryContract.InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
 
-                cursor.close();
                 break;
             case InventoryList_ID:
                 // Create and/or open a database to read from it
@@ -83,7 +82,6 @@ public class InventoryProvider extends ContentProvider {
                 selection = InventoryContract.InventoryEntry._ID + "?=";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(InventoryContract.InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
-                cursor.close();
                 break;
 
             default:
@@ -93,6 +91,7 @@ public class InventoryProvider extends ContentProvider {
 
         }
 
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
     }
@@ -100,7 +99,15 @@ public class InventoryProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case InventoryList:
+                return InventoryContract.InventoryEntry.CONTENT_LIST_TYPE;
+            case InventoryList_ID:
+                return InventoryContract.InventoryEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     @Nullable
@@ -118,6 +125,9 @@ public class InventoryProvider extends ContentProvider {
 
     private Uri insertInventoryItem(Uri uri, ContentValues values) {
 
+
+        //Sanity Checks
+
         // We got to make the database write
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -134,6 +144,7 @@ public class InventoryProvider extends ContentProvider {
         }
 
 
+        getContext().getContentResolver().notifyChange(uri, null);
         // Once we know the ID of the new row in the table,
         // return the new URI with the ID appended to the end of it
         return ContentUris.withAppendedId(uri, id);
@@ -141,11 +152,113 @@ public class InventoryProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        // Track the number of rows that were deleted
+        int rowsDeleted;
+
+        // Get writeable database
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case InventoryList:
+                // Delete all rows that match the selection and selection args
+                rowsDeleted = database.delete(InventoryContract.InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case InventoryList_ID:
+                // Delete a single row given by the ID in the URI
+                selection = InventoryContract.InventoryEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                rowsDeleted = database.delete(InventoryContract.InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+
+        }
+        // If 1 or more rows were deleted, then notify all listeners that the data at the
+        // given URI has changed
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case InventoryList:
+                return updateItem(uri, values, selection, selectionArgs);
+            case InventoryList_ID:
+                // For the PET_ID code, extract out the ID from the URI,
+                // so we know which row to update. Selection will be "_id=?" and selection
+                // arguments will be a String array containing the actual ID.
+                selection = InventoryContract.InventoryEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateItem(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
     }
+
+    private int updateItem(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+
+        if (values.size() == 0) {
+            return 0;
+        }
+        // check that the name value is not null.
+        if (values.containsKey(InventoryContract.InventoryEntry.NAME_COLUMN)) {
+            String name = values.getAsString(InventoryContract.InventoryEntry.NAME_COLUMN);
+            if (name == null) {
+                throw new IllegalArgumentException("There is no name.");
+            }
+        }
+        // check that the price value is not null.
+        if (values.containsKey(InventoryContract.InventoryEntry.PRICE_COLUMN)) {
+            String price = values.getAsString(InventoryContract.InventoryEntry.NAME_COLUMN);
+            if (price == null) {
+                throw new IllegalArgumentException("There is no price.");
+            }
+        }
+        // check that the name value is not null.
+        if (values.containsKey(InventoryContract.InventoryEntry.QUANTITY_COLUMN)) {
+            String quantity = values.getAsString(InventoryContract.InventoryEntry.NAME_COLUMN);
+            if (quantity == null) {
+                throw new IllegalArgumentException("There is quantity.");
+            }
+        }
+        // check that the name value is not null.
+        if (values.containsKey(InventoryContract.InventoryEntry.SUPPLIER_NAME)) {
+            String sName = values.getAsString(InventoryContract.InventoryEntry.SUPPLIER_NAME);
+            if (sName == null) {
+                throw new IllegalArgumentException("There is no supplier name.");
+            }
+        }
+        // check that the name value is not null.
+        if (values.containsKey(InventoryContract.InventoryEntry.SUPPLIER_PHONE_NUMBER_COLUMN)) {
+            String sNumber = values.getAsString(InventoryContract.InventoryEntry.SUPPLIER_PHONE_NUMBER_COLUMN);
+            if (sNumber == null) {
+                throw new IllegalArgumentException("There is no supplier number.");
+            }
+        }
+
+        // TODO: Update the selected pets in the pets database table with the given ContentValues
+        // Otherwise, get writeable database to update the data
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsUpdated = database.update(InventoryContract.InventoryEntry.TABLE_NAME, values, selection, selectionArgs);
+        // If 1 or more rows were updated, then notify all listeners that the data at the
+        // given URI has changed
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        // Returns the number of database rows affected by the update statement
+        return rowsUpdated;
+
+
+    }
+
 }

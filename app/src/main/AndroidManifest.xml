@@ -21,7 +21,7 @@
 
         <provider
             android:name=".InventoryProvider"
-            android:authorities="com.example.ryan.inventoryapp"
+            android:authorities="com.example.ryan.inventoryapp.InventoryProvider"
             android:exported="false" />
 
     </application>

@@ -67,19 +67,26 @@ public class AddDialogBox extends DialogFragment {
 
                         // check to see if data is null
 
-                        String nameString = name.getText().toString();
-                        String priceString = price.getText().toString();
-                        String quantityString = quantity.getText().toString();
-                        String supplierNameString = supplierName.getText().toString();
-                        String supplierNumberString = supplierNumber.getText().toString();
+                        String nameString = name.getText().toString().trim();
+                        String priceString = price.getText().toString().trim();
+                        String quantityString = quantity.getText().toString().trim();
+                        String supplierNameString = supplierName.getText().toString().trim();
+                        String supplierNumberString = supplierNumber.getText().toString().trim();
 
                         // Price should be an float..a decimal or float
                         // Quantity should be an integer, a positive integer
+                        double priceDouble = 0;
+                        int quantityInt = 0;
 
-                        double priceDouble = Double.valueOf(priceString);
-                        int quantityInt = Integer.valueOf(quantityString);
+                        try {
+                            priceDouble = Double.valueOf(priceString);
+                            quantityInt = Integer.valueOf(quantityString);
+                        } catch (Exception e) {
 
-                        if (nameString != null && priceString != null && quantityString != null && supplierNameString != null && supplierNumberString != null) {
+
+                        }
+
+                        if (!nameString.equals("") && !priceString.equals("") && !quantityString.equals("") && !supplierNameString.equals("") && !supplierNumberString.equals("")) {
 
 
                             // Check to see if quantity and price is above or equal zero

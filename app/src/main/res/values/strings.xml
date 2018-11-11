@@ -24,6 +24,6 @@
     <string name="SaveButtonLabel">Save</string>
     <string name="editor_insert_success">Success!</string>
     <string name="editor_insert_fail">fail!</string>
-    <string name="showNullValuesText">All fields should be completed</string>
+    <string name="showNullValuesText">All information should be completed</string>
     <string name="positiveMatters">Please Make Sure Quantity and Price are positive values</string>
 </resources>
