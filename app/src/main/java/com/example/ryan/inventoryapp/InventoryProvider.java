@@ -79,7 +79,7 @@ public class InventoryProvider extends ContentProvider {
                 // Create and/or open a database to read from it
 
                 // We are querying for that one item
-                selection = InventoryContract.InventoryEntry._ID + "?=";
+                selection = InventoryContract.InventoryEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(InventoryContract.InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
@@ -224,9 +224,9 @@ public class InventoryProvider extends ContentProvider {
         }
         // check that the name value is not null.
         if (values.containsKey(InventoryContract.InventoryEntry.QUANTITY_COLUMN)) {
-            String quantity = values.getAsString(InventoryContract.InventoryEntry.NAME_COLUMN);
+            String quantity = values.getAsString(InventoryContract.InventoryEntry.QUANTITY_COLUMN);
             if (quantity == null) {
-                throw new IllegalArgumentException("There is quantity.");
+                throw new IllegalArgumentException("There is no quantity.");
             }
         }
         // check that the name value is not null.

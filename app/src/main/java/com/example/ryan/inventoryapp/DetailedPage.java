@@ -1,17 +1,21 @@
 package com.example.ryan.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetailedPage extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private final static int itemLoader = 0;
+    private final static int itemLoader1 = 0;
 
 
     TextView nameTextBox;
@@ -25,19 +29,23 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
     Button deleteButton;
     Uri contentUri;
 
+    String supplierNumber;
+    int quantity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_page);
 
-        String uri = getIntent().getStringExtra("theUri");
-        contentUri = Uri.parse(uri);
+        Intent intent = getIntent();
+        contentUri = intent.getData();
+
 
         //lets get the views as variables!
         nameTextBox = (TextView) findViewById(R.id.nameTextBox);
         priceTextBox = (TextView) findViewById(R.id.priceTextBox);
-        quantityTextBox = (TextView) findViewById(R.id.quantityListViewTextBox);
+        quantityTextBox = (TextView) findViewById(R.id.QuantityTextBox);
         supplierNameTextBox = (TextView) findViewById(R.id.supplierNameTextBox);
         supplierNumberTextBox = (TextView) findViewById(R.id.supplierNumberTextBox);
 
@@ -46,9 +54,94 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
         decreaseButton = (Button) findViewById(R.id.decreaseQuantityButton);
         deleteButton = (Button) findViewById(R.id.deleteButton);
 
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Get the phone number, and send an intent to call app
+                dialPhoneNumber(supplierNumber);
 
-        getLoaderManager().initLoader(itemLoader, null, this);
+            }
+        });
+        increaseButton.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                //Increase the quantity
+                int mQuantity = quantity;
+                mQuantity += 1;
+                ContentValues values = new ContentValues();
+                values.put(InventoryContract.InventoryEntry.QUANTITY_COLUMN, mQuantity);
+                int rowsAffected = getContentResolver().update(contentUri, values, null, null);
+                if (rowsAffected == 0) {
+                    //Fail
+                    Toast.makeText(getApplicationContext(), getString(R.string.editor_update_fail),
+                            Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    //Successfull
+                    Toast.makeText(getApplicationContext(), getString(R.string.editor_update_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+        decreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (quantity > 0) {
+                    int mQuantity = quantity;
+                    mQuantity -= 1;
+
+                    ContentValues values = new ContentValues();
+                    values.put(InventoryContract.InventoryEntry.QUANTITY_COLUMN, mQuantity);
+
+                    // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
+                    // and pass in the new ContentValues. Pass in null for the selection and selection args
+                    // because mCurrentPetUri will already identify the correct row in the database that
+                    // we want to modify.
+                    int rowsAffected = getContentResolver().update(contentUri, values, null, null);
+
+                    if (rowsAffected == 0) {
+                        //Fail
+                        Toast.makeText(getApplicationContext(), getString(R.string.editor_update_fail),
+                                Toast.LENGTH_SHORT).show();
+
+
+                    } else {
+                        //Successfull
+                        Toast.makeText(getApplicationContext(), getString(R.string.editor_update_successful),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.canNotDecrease, Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        getLoaderManager().initLoader(itemLoader1, null, this);
+
+    }
+
+    public void dialPhoneNumber(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 
@@ -79,9 +172,11 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
             // Extract out the value from the Cursor for the given column index
             String name = data.getString(nameColumnIndex);
             String price = data.getString(priceColumnIndex);
-            int quantity = data.getInt(quantityColumnIndex);
+            quantity = data.getInt(quantityColumnIndex);
             String supplierName = data.getString(supplierNameColumnIndex);
-            String supplierNumber = data.getString(supplierNumberColumnIndex);
+            supplierNumber = data.getString(supplierNumberColumnIndex);
+
+
 
             nameTextBox.setText(name);
             priceTextBox.setText(price);

@@ -2,6 +2,7 @@ package com.example.ryan.inventoryapp;
 
 import android.app.DialogFragment;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -45,13 +46,12 @@ public class MainActivity extends FragmentActivity implements AddDialogBox.AddDi
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "WE HERE", Toast.LENGTH_SHORT).show();
                 // Open up product page and send the uri
                 Intent intent = new Intent(MainActivity.this, DetailedPage.class);
 
-                Uri uri = Uri.withAppendedPath(InventoryContract.InventoryEntry.CONTENT_URI, String.valueOf(id));
+                Uri uri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
 
-                intent.putExtra("theUri", uri);
+                intent.setData(uri);
 
                 startActivity(intent);
 

@@ -26,4 +26,7 @@
     <string name="editor_insert_fail">fail!</string>
     <string name="showNullValuesText">All information should be completed</string>
     <string name="positiveMatters">Please Make Sure Quantity and Price are positive values</string>
+    <string name="canNotDecrease">Can Not Sale Anymore</string>
+    <string name="editor_update_successful">Sale Success!</string>
+    <string name="editor_update_fail">No Sale</string>
 </resources>
