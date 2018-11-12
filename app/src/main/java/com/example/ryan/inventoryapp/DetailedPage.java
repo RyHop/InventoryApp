@@ -1,21 +1,25 @@
 package com.example.ryan.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class DetailedPage extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private final static int itemLoader1 = 0;
+    private final static int itemLoader1 = 1;
 
 
     TextView nameTextBox;
@@ -37,7 +41,7 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_page);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         contentUri = intent.getData();
 
@@ -129,6 +133,7 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View v) {
 
+                showDeleteConfirmationDialog();
             }
         });
 
@@ -144,6 +149,59 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the postivie and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deleteItem();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteItem() {
+
+
+        int rowsDeleted = getContentResolver().delete(contentUri, null, null);
+
+
+        if (rowsDeleted == 0) {
+            Toast.makeText(this, getString(R.string.ItemNotDeleted), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getString(R.string.DeleteSuccess), Toast.LENGTH_SHORT).show();
+        }
+
+        Intent intent = new Intent(DetailedPage.this, MainActivity.class);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -183,17 +241,17 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
             quantityTextBox.setText(String.valueOf(quantity));
             supplierNameTextBox.setText(supplierName);
             supplierNumberTextBox.setText(supplierNumber);
-//oops
 
         } else {
-
-            throw new IllegalArgumentException("Something wrong with cursor");
+            Intent intent = new Intent(DetailedPage.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         //Do nothing
+
 
     }
 }

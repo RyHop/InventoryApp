@@ -3,6 +3,7 @@ package com.example.ryan.inventoryapp;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -86,6 +87,11 @@ public class InventoryCursorAdapter extends CursorAdapter {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Uri uri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, ID);
+                Intent intent = new Intent(context, EditActivity.class);
+                intent.setData(uri);
+                context.startActivity(intent);
+
 
             }
         });

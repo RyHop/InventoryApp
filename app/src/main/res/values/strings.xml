@@ -29,4 +29,12 @@
     <string name="canNotDecrease">Can Not Sale Anymore</string>
     <string name="editor_update_successful">Sale Success!</string>
     <string name="editor_update_fail">No Sale</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_dialog_msg">You sure you want to delete this item?</string>
+    <string name="delete">Delete</string>
+    <string name="DeleteSuccess">Item Deleted!</string>
+    <string name="ItemNotDeleted">Item Did Not Delete</string>
+    <string name="DataInvalid">The Data entered was invalid</string>
+    <string name="editor_save_fail">Save Success</string>
+    <string name="editor_save_successful">Save Success</string>
 </resources>
