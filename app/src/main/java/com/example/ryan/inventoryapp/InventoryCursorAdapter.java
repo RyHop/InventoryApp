@@ -16,27 +16,11 @@ import android.widget.Toast;
 
 public class InventoryCursorAdapter extends CursorAdapter {
 
-   /* public interface changeQuantity{
-        public void saleButtonClick();
 
-
-
-    }*/
-
-/*
-    changeQuantity mListener;
-*/
 
     public InventoryCursorAdapter(Context context, Cursor c) {
         super(context, c);
-       /* try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (changeQuantity) context;
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(context.toString()
-                    + " must implement AddDialogListener");
-        }*/
+
     }
 
     @Override
@@ -79,10 +63,8 @@ public class InventoryCursorAdapter extends CursorAdapter {
                     Toast.makeText(context, R.string.canNotDecrease, Toast.LENGTH_SHORT).show();
                 }
 
-
             }
         });
-
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,16 +74,13 @@ public class InventoryCursorAdapter extends CursorAdapter {
                 intent.setData(uri);
                 context.startActivity(intent);
 
-
             }
         });
-
 
         // Populate fields with extracted properties
         tvName.setText(name);
         tvPrice.setText(price);
         tvQuantity.setText(String.valueOf(quantity));
-
 
     }
 
@@ -112,10 +91,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         ContentValues values = new ContentValues();
         values.put(InventoryContract.InventoryEntry.QUANTITY_COLUMN, mQuantity);
 
-        // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
-        // and pass in the new ContentValues. Pass in null for the selection and selection args
-        // because mCurrentPetUri will already identify the correct row in the database that
-        // we want to modify.
+        //update the quantity
         int rowsAffected = context.getContentResolver().update(uri, values, null, null);
 
         if (rowsAffected == 0) {
@@ -123,14 +99,11 @@ public class InventoryCursorAdapter extends CursorAdapter {
             Toast.makeText(context, context.getString(R.string.editor_update_fail),
                     Toast.LENGTH_SHORT).show();
 
-
         } else {
             //Successfull
             Toast.makeText(context, context.getString(R.string.editor_update_successful),
                     Toast.LENGTH_SHORT).show();
         }
-
-
         return mQuantity;
     }
 }

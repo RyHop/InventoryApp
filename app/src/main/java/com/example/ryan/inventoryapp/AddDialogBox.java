@@ -82,7 +82,7 @@ public class AddDialogBox extends DialogFragment {
                             priceDouble = Double.valueOf(priceString);
                             quantityInt = Integer.valueOf(quantityString);
                         } catch (Exception e) {
-
+                            Toast.makeText(getActivity().getApplicationContext(), R.string.DataInvalid, Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -97,16 +97,12 @@ public class AddDialogBox extends DialogFragment {
                                 Toast.makeText(getActivity().getApplicationContext(), R.string.positiveMatters, Toast.LENGTH_SHORT).show();
 
                             }
-                            // Add items if all values are not null
-
 
                         } else {
 
                             Toast.makeText(getActivity().getApplicationContext(), R.string.showNullValuesText, Toast.LENGTH_SHORT).show();
 
                         }
-
-
 
                     }
                 })

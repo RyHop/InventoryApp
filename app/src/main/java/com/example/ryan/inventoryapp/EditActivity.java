@@ -75,18 +75,16 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                         Toast.makeText(getApplicationContext(), getString(R.string.editor_save_successful),
                                 Toast.LENGTH_SHORT).show();
                     }
-
+                    // Go to MainActivity if the database is trying to save
                     Intent intent2 = new Intent(EditActivity.this, MainActivity.class);
                     startActivity(intent2);
-
 
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.DataInvalid, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
+        //Calling loader
         getLoaderManager().initLoader(itemLoader2, null, this);
     }
 
@@ -101,6 +99,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
+
+    //See if data is okay to insert into database
     private boolean validateData(String theName, String thePrice, String theCount, String SupplierName, String SupplierNumber) {
         double priceDouble = 0;
         int quantityInt = 0;
@@ -115,7 +115,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (!theName.equals("") && !thePrice.equals("") && !theCount.equals("") && !SupplierName.equals("") && !SupplierNumber.equals("")) {
 
-
             // Check to see if quantity and price is above or equal zero
             if (quantityInt > 0 && priceDouble >= 0) {
                 return true;
@@ -123,13 +122,10 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             } else {
                 return false;
             }
-            // Add items if all values are not null
-
 
         } else {
             return false;
         }
-
 
     }
 
@@ -164,16 +160,13 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             String supplierName = data.getString(supplierNameColumnIndex);
             String supplierNumber = data.getString(supplierNumberColumnIndex);
 
-
             NameEdit.setText(name);
             PriceEdit.setText(price);
             QuantityEdit.setText(String.valueOf(quantity));
             SupplierNameEdit.setText(supplierName);
             SupplierPhoneEdit.setText(supplierNumber);
 
-
         }
-
     }
 
     @Override

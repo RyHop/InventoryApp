@@ -102,10 +102,8 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
                     ContentValues values = new ContentValues();
                     values.put(InventoryContract.InventoryEntry.QUANTITY_COLUMN, mQuantity);
 
-                    // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
-                    // and pass in the new ContentValues. Pass in null for the selection and selection args
-                    // because mCurrentPetUri will already identify the correct row in the database that
-                    // we want to modify.
+
+                    // we want to modify or update one item.
                     int rowsAffected = getContentResolver().update(contentUri, values, null, null);
 
                     if (rowsAffected == 0) {
@@ -124,7 +122,6 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
                     Toast.makeText(getApplicationContext(), R.string.canNotDecrease, Toast.LENGTH_SHORT).show();
 
                 }
-
 
             }
         });
@@ -156,14 +153,13 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the pet.
+                //Delete the item
                 deleteItem();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the pet.
+                //Clicking don't want to delete it.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -177,10 +173,10 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
 
     private void deleteItem() {
 
-
+        //Getting the feedback of deletion
         int rowsDeleted = getContentResolver().delete(contentUri, null, null);
 
-
+        //See if deleted
         if (rowsDeleted == 0) {
             Toast.makeText(this, getString(R.string.ItemNotDeleted), Toast.LENGTH_SHORT).show();
         } else {
@@ -243,6 +239,8 @@ public class DetailedPage extends AppCompatActivity implements LoaderManager.Loa
             supplierNumberTextBox.setText(supplierNumber);
 
         } else {
+
+            //Send back to MainActivity if data is something else, say deleted.
             Intent intent = new Intent(DetailedPage.this, MainActivity.class);
             startActivity(intent);
         }

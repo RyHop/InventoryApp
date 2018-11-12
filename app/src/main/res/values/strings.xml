@@ -35,6 +35,6 @@
     <string name="DeleteSuccess">Item Deleted!</string>
     <string name="ItemNotDeleted">Item Did Not Delete</string>
     <string name="DataInvalid">The Data entered was invalid</string>
-    <string name="editor_save_fail">Save Success</string>
+    <string name="editor_save_fail">Save Fail</string>
     <string name="editor_save_successful">Save Success</string>
 </resources>
